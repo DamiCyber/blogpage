@@ -90,11 +90,12 @@ const Blog = () => {
               >
                 {/* Image Section */}
                 {post.mainImage?.asset?.url && (
-                  <div className="blog-image-container h-44 sm:h-52 lg:h-56 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+                  <div className="blog-image-container h-44 sm:h-52 lg:h-56 w-full overflow-hidden">
                     <img
                       src={post.mainImage.asset.url}
                       alt={post.title || 'Blog post image'}
                       loading="lazy"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                 )}
@@ -115,7 +116,7 @@ const Blog = () => {
                   {post.slug?.current && (
                     <a
                       href={`/blog/${post.slug.current}`}
-                      className="blog-read-more text-blue-600 hover:text-blue-700 font-medium text-sm sm:text-base mt-auto colo"
+                      className="blog-read-more text-blue-600 hover:text-blue-700 font-medium text-sm sm:text-base mt-auto inline-block w-fit"
                     >
                       Read more
                       <svg 
