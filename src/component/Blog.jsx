@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import client from '../client'
 import './Header.css'
 
@@ -114,8 +115,8 @@ const Blog = () => {
                   )}
                   
                   {post.slug?.current && (
-                    <a
-                      href={`/blog/${post.slug.current}`}
+                    <Link
+                      to={`/blog/${post.slug.current}`}
                       className="blog-read-more text-blue-600 hover:text-blue-700 font-medium text-sm sm:text-base mt-auto inline-block w-fit"
                     >
                       Read more
@@ -127,7 +128,7 @@ const Blog = () => {
                       >
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
-                    </a>
+                    </Link>
                   )}
                 </div>
               </article>
