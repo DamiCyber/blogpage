@@ -39,6 +39,15 @@ const Header = () => {
             <Link to="/blog" className="navbar-link" onClick={closeMenu}>
               Blog
             </Link>
+            <a 
+              href="https://sanitybackend-3.onrender.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="navbar-link"
+              onClick={closeMenu}
+            >
+              Admin
+            </a>
           </nav>
         </div>
       </header>
