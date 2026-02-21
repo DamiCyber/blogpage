@@ -5,6 +5,8 @@ import client from '../client'
 const SinglePost = () => {
   const { slug } = useParams()
   const [post, setPost] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     if (!slug) return
@@ -21,12 +23,55 @@ const SinglePost = () => {
       }
     `
 
-    client.fetch(query, { slug }).then((data) => {
-      setPost(data)
-    })
+    client
+      .fetch(query, { slug })
+      .then((data) => {
+        setPost(data)
+        setLoading(false)
+      })
+      .catch((err) => {
+        console.error(err)
+        setError('Failed to load post. Please check your CORS settings in Sanity.')
+        setLoading(false)
+      })
   }, [slug])
 
-  if (!post) return <div style={{ textAlign: 'center', marginTop: '50px' }}>Loading...</div>
+  if (loading) {
+    return (
+      <div style={{ textAlign: 'center', marginTop: '50px', padding: '2rem' }}>
+        <div style={{ fontSize: '1.2rem', color: '#666' }}>Loading...</div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div style={{ textAlign: 'center', marginTop: '50px', padding: '2rem' }}>
+        <div style={{ 
+          backgroundColor: '#fee', 
+          border: '1px solid #fcc', 
+          borderRadius: '8px', 
+          padding: '1.5rem',
+          maxWidth: '600px',
+          margin: '0 auto'
+        }}>
+          <h2 style={{ color: '#c33', marginBottom: '1rem' }}>Error Loading Post</h2>
+          <p style={{ color: '#666' }}>{error}</p>
+          <p style={{ color: '#666', marginTop: '1rem', fontSize: '0.9rem' }}>
+            Make sure <strong>https://blogpage-chi.vercel.app</strong> is added as a CORS origin in your Sanity project settings.
+          </p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!post) {
+    return (
+      <div style={{ textAlign: 'center', marginTop: '50px', padding: '2rem' }}>
+        <div style={{ fontSize: '1.2rem', color: '#666' }}>Post not found</div>
+      </div>
+    )
+  }
 
   return (
     <div style={styles.container}>
